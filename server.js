@@ -120,7 +120,9 @@ const connectWithRetry = async () => {
         console.log('Attempting to connect to MongoDB...');
         await mongoose.connect(mongoURI, {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
         });
         console.log('Successfully connected to MongoDB.');
     } catch (error) {
@@ -132,7 +134,7 @@ const connectWithRetry = async () => {
 
 connectWithRetry();
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`Access the application at http://localhost:${PORT}`);
 }); 
